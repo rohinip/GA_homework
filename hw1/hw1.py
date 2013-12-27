@@ -4,13 +4,11 @@
 ## 01/09/2014             ##
 ############################
 
-# Instructions: 
-# 3. Perform cross n-fold validation
-# 3a. Call (3) while parameterizing n, showing the accuracy result from each test
-# 4a. Provide description of the problem you are solving
-# 4b. Provide description of problems that might arise when approaching that problem
-# 4c. Provide your results and future direction
-# 5. Push to github, provide link on GDocs
+# Outstanding Instructions: 
+# - Call cross-validation function while parameterizing n, showing the accuracy result from each test
+# - Provide description of the problem you are solving
+# - Provide description of problems that might arise when approaching that problem
+# - Provide your results and future direction
 
 import argparse
 from sklearn import datasets
