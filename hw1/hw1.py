@@ -54,4 +54,5 @@ cross_validate(validation_folds, features_training, species_training, model)
 ## http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 ## http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html
 ## http://scikit-learn.org/stable/modules/cross_validation.html#k-fold 
+## http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.KFold.html
 ########################## 
