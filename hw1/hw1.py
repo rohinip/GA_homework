@@ -4,49 +4,55 @@
 ## 01/09/2014             ##
 ############################
 
-# Instructions: 
-# 3. Perform cross n-fold validation
-# 3a. Call (3) while parameterizing n, showing the accuracy result from each test
-# 4a. Provide description of the problem you are solving
-# 4b. Provide description of problems that might arise when approaching that problem
-# 4c. Provide your results and future direction
-# 5. Push to github, provide link on GDocs
 
+# Imports
 import argparse
 from sklearn import datasets
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.cross_validation import KFold
 
-iris = datasets.load_iris()
-features_training = iris.data
-species_training = iris.target
-knn_neighbors = 3
-validation_folds = 3
+# Load Iris Dataset
+def load_iris_data(): 
+  iris = datasets.load_iris()
+  return (iris.data, iris.target, iris.target_names) #features, species, species_options  
 
-def knn(n, x_training, y_training):
+# K Nearest Neighbors
+#   other useful methods of this knn object:
+#     fit(X_train, y_train) --> fit the model using a training set
+#     predict(X_classify) --> to predict a result using the trained model
+#     score(X_test, y_test) --> to score the model using a test set
+def knn(x_training, y_training, n=3):
   neigh = KNeighborsClassifier(n) #number of neighbors to use
   clf = neigh.fit(x_training, y_training) #fit the KNN model using training info
   return clf
 
-def naive_bayes(x_training, y_training):
+# Naive Bayes
+#  other useful methods of this knn object:
+#    fit(X_train, y_train) --> fit the model using a training set
+#    predict(X_classify) --> to predict a result using the trained model
+#    score(X_test, y_test) --> to score the model using a test set
+def nb(x_training, y_training):
   nbayes = GaussianNB()
   clf = nbayes.fit(x_training, y_training) #fit the NB model using training info
   return clf
 
-def cross_validate(folds, x, y, model):
-  fold = KFold(len(y), n_folds=folds, shuffle=True)
+# Cross Validation
+def cross_validate(features, classifications, clf, number_folds):
+  
+  #KFold provides train/test indices (shuffle enabled to create random indices)
+  kfold_indices = KFold(len(classifications), n_folds=number_folds, shuffle=True)
+  
+  #for each training and testing slices, run the classifier and score the results
+  k_score_total = 0
+  for train_slice, test_slice in kfold_indices: #will loop through number_folds times
+    model = clf(features[[train_slice]], classifications[[train_slice]])
+    k_score = model.score(features[[test_slice]], classifications[[test_slice]])
+    k_score_total += k_score
 
-parser = argparse.ArgumentParser(description='Select KNN or Naive Bayes Classifier')
-parser.add_argument('-c', '--classifier', help='a classifier type: KNN or NB (if none selected, default is Naive Bayes', required=True)
-args = parser.parse_args()
+  #return average (mean) accuracy
+  return (k_score_total/number_folds)
 
-if (args.classifier.upper()=='KNN'):
-  model = knn(knn_neighbors, features_training, species_training)
-else:
-  model = naive_bayes(features_training, species_training)
-
-cross_validate(validation_folds, features_training, species_training, model)
 
 ######## Appendix ########
 ## http://en.wikipedia.org/wiki/Iris_flower_data_set
