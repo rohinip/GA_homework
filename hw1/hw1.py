@@ -60,4 +60,5 @@ def cross_validate(features, classifications, clf, number_folds):
 ## http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 ## http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html
 ## http://scikit-learn.org/stable/modules/cross_validation.html#k-fold 
+## http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.KFold.html
 ########################## 
