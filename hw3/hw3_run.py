@@ -13,7 +13,7 @@ from hw3 import load_heart_data, plot_histogram, random_forest
 
 plot_histogram(fulldata)
 
-#random_forest(features, outcomes, 10)
+random_forest(features, outcomes, 10)
 
 print 
 print "====== DONE ======"

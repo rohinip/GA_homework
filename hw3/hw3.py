@@ -11,8 +11,8 @@ matplotlib.use("AGG")
 from matplotlib import pyplot as plt
 import numpy as np
 from scipy import stats
-from scipy.stats import ttest_ind
-from sklearn.ensemble.forest import RandomForestClassifier
+from scipy.stats import ttest_ind, ttest_1samp
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.cross_validation import cross_val_score
 
 # Dataset from http://archive.ics.uci.edu/ml/datasets/Statlog+%28Heart%29
@@ -241,9 +241,13 @@ def plot_histogram(fulldata):
 
 # Random Forest Classifier
 def random_forest(x_training, y_training, cv):
-  clf = RandomForestClassifier(n_estimators=1000)
+  clf = RandomForestClassifier(n_estimators=100)
+
+  ### Need to slice the data set into training and test data ###
   score = cross_val_score(clf, x_training, y_training, cv=cv)
   print "%s-fold cross validation accuracy: %s" % (cv,sum(score)/score.shape[0])
+  ### ### ### ### ###
+
   clf = clf.fit(x_training, y_training)
   preds = clf.predict(x_training)
   #print "predictions counter = %s" % (Counter(clf.predict(x_training))
@@ -253,26 +257,26 @@ def random_forest(x_training, y_training, cv):
   tn = 0
   for a in range(len(y_training)):
     if y_training[a]==preds[a]:
-      if preds[a]==0: #might have to make this 1 bc of heart data
+      if preds[a]=="2": #no disease
         tn+=1
-      elif preds[a]==1:
+      elif preds[a]=="1": #disease
         tp+=1
-    elif preds[a]==1: fp+=1
-    elif preds[a]==0: fn+=1
+    elif preds[a]=="2": fp+=1
+    elif preds[a]=="1": fn+=1
 
   print 'correct positives:', tp
   print 'correct negatives:', tn
   print 'false positives:', fp
   print 'false negatives:', fn
-  precision = float(tp)/(tp+fp)
-  recall = float(tp)/(tp+fn)
-  fpr = float(fp)/(fp+tn)
-  fdr = float(fp)/(fp+tp)
-  prediction_accuracy = (100*float(tp+tn)/(tp+tn+fp+fn),'%') 
-  print 'precision:', precision
-  print 'recall:',recall
-  print 'fpr:', fpr
-  print 'fdr:', fdr
-  print 'prediction accuracy:', prediction_accuracy
+#  precision = float(tp)/(tp+fp)
+#  recall = float(tp)/(tp+fn)
+#  fpr = float(fp)/(fp+tn)
+#  fdr = float(fp)/(fp+tp)
+#  prediction_accuracy = (100*float(tp+tn)/(tp+tn+fp+fn),'%') 
+#  print 'precision:', precision
+#  print 'recall:',recall
+#  print 'fpr:', fpr
+#  print 'fdr:', fdr
+#  print 'prediction accuracy:', prediction_accuracy
 
   return clf
