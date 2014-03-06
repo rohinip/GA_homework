@@ -1,17 +1,22 @@
 import os
 import csv
 import numpy as np
+import pandas as pd
 
 path = '/home/GA8/GA_homework/final/frenchopen.csv'
-data = []
+#data = []
 
 #Import our data
 #The 'r' parameter is for read and the b parameter is for 'binary'
-with open(path, 'rb') as csv_file_object:
-  reader = csv.reader(csv_file_object)
-  header = csv_file_object.next()
-  for row in reader:
-    data.append(row)
+#with open(path, 'rb') as csv_file_object:
+#  reader = csv.reader(csv_file_object)
+#  header = csv_file_object.next()
+#  for row in reader:
+#    data.append(row)
+
+data = pd.read_csv(path)
+print data.head()
+boo
 
 #http://www.tennis-data.co.uk/notes.txt
 data = np.array(data)
