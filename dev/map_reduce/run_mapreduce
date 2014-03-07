@@ -1,0 +1,4 @@
+cat 4300.txt.utf-8.txt | python mapper.py | sort -k1,1 | python reducer.py
+
+##https://raw.github.com/hallr/GA_homework/master/mapreduce_tutorial/4300.txt.utf-8.txt
+##https://raw.github.com/hallr/GA_homework/master/mapreduce_tutorial/5000.txt.utf-8.txt
